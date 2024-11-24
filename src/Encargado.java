@@ -1,3 +1,4 @@
+
 public class Encargado extends Thread {
     private JuegosDePremios juegos;
 
