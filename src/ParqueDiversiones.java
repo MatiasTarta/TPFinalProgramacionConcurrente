@@ -1,15 +1,34 @@
+import java.awt.Font;
+import java.util.concurrent.Semaphore;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 public class ParqueDiversiones {
     Comedor restaurant;
     JuegosDePremios juegos;
     Encargado encargados[] = new Encargado[5];
+    Semaphore molinete;
 
-    public ParqueDiversiones() {
+    public ParqueDiversiones(int capacidad) {
         restaurant = new Comedor();
         juegos = new JuegosDePremios();
+        molinete = new Semaphore(capacidad);
         for (int i = 0; i < encargados.length; i++) {
             encargados[i] = new Encargado(juegos);
             encargados[i].start();
         }
+    }
+
+    public void entrar() throws InterruptedException {
+        molinete.acquire();
+        System.out.println(Thread.currentThread().getName() + " Entro al parque de atracciones");
+    }
+
+    public void salir() {
+        System.out.println(Thread.currentThread().getName() + " se fue del parque");
+        molinete.release();
     }
 
     public void usarComedor() throws InterruptedException {
@@ -33,5 +52,20 @@ public class ParqueDiversiones {
         }
         System.out.println(Thread.currentThread().getName() + " obtuvo: " + puntos + " puntos.");
         return puntos;
+    }
+
+    public void reloj() {
+        JFrame ventana = new JFrame("Reloj del Parque");
+        JLabel etiquetaHora = new JLabel();
+        etiquetaHora.setFont(new Font("Arial", Font.BOLD, 40));
+        etiquetaHora.setHorizontalAlignment(SwingConstants.CENTER);
+
+        ventana.add(etiquetaHora);
+        ventana.setSize(300, 150);
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setVisible(true);
+
+        Reloj reloj = new Reloj(etiquetaHora);
+        reloj.start();
     }
 }

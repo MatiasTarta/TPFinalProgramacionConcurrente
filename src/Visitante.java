@@ -11,8 +11,10 @@ public class Visitante extends Thread {
 
     public void run() {
         try {
+            // parqueDeLaCosta.entrar();
             // parqueDeLaCosta.usarComedor();
             puntos += parqueDeLaCosta.jugarPorPremios();
+            // parqueDeLaCosta.salir();
         } catch (Exception e) {
             e.printStackTrace(); // Manejo básico de excepciones
         }
