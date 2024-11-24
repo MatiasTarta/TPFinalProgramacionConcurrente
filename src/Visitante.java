@@ -1,15 +1,20 @@
+
 public class Visitante extends Thread {
     ParqueDiversiones parqueDeLaCosta;
+    private int puntos;
 
-    public Visitante(ParqueDiversiones parque) {
+    public Visitante(String nombre, ParqueDiversiones parque) {
+        super(nombre);
         parqueDeLaCosta = parque;
+        puntos = 0;
     }
 
     public void run() {
         try {
-            parqueDeLaCosta.usarComedor();
-
+            // parqueDeLaCosta.usarComedor();
+            puntos += parqueDeLaCosta.jugarPorPremios();
         } catch (Exception e) {
+            e.printStackTrace(); // Manejo básico de excepciones
         }
     }
 }

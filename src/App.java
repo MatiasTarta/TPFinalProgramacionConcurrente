@@ -21,11 +21,11 @@ public class App {
         reloj.start();
 
         ParqueDiversiones parqueDeLaCosta = new ParqueDiversiones();
-        Visitante visitante1 = new Visitante(parqueDeLaCosta);
-        Visitante visitante2 = new Visitante(parqueDeLaCosta);
-        Visitante visitante3 = new Visitante(parqueDeLaCosta);
-        Visitante visitante4 = new Visitante(parqueDeLaCosta);
-        Visitante visitante5 = new Visitante(parqueDeLaCosta);
+        Visitante visitante1 = new Visitante("Visitante-1", parqueDeLaCosta);
+        Visitante visitante2 = new Visitante("Visitante-2", parqueDeLaCosta);
+        Visitante visitante3 = new Visitante("Visitante-3", parqueDeLaCosta);
+        Visitante visitante4 = new Visitante("Visitante-4", parqueDeLaCosta);
+        Visitante visitante5 = new Visitante("Visitante-5", parqueDeLaCosta);
 
         // Iniciar los hilos
         visitante1.start();
