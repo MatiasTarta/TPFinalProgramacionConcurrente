@@ -10,7 +10,10 @@ public class ParqueDiversiones {
         exito = restaurant.entrarComedor();
         if (exito) {
             restaurant.sentarse();
-            // restaurant.comer();
+            // comen
+            restaurant.salir();
+        } else {
+            // comedor lleno, intenta otra cosa
         }
     }
 }

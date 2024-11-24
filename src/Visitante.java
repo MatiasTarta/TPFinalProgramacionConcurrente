@@ -8,8 +8,8 @@ public class Visitante extends Thread {
     public void run() {
         try {
             parqueDeLaCosta.usarComedor();
+
         } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 }
