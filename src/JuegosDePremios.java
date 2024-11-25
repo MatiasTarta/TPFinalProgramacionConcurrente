@@ -11,17 +11,17 @@ public class JuegosDePremios {
     }
 
     public int jugar() throws InterruptedException {
-        // semEntrada.release(); // notifica al empleado para poder recibir una ficha
+        semEntrada.release(); // notifica al empleado para poder recibir una ficha
         ficha.exchange(Thread.currentThread().getName() + " cambia una ficha");
         int randomSleep = (int) (Math.random() * 10) * 1000;
         Thread.sleep(randomSleep); // simula tiempo de juego
-        return randomSleep * 100;
+        return randomSleep;
     }
 
     public void darFicha() throws InterruptedException {
         // metodo ejecutado por los encargados del area
         semEntrada.acquire();
-        String pantalla = ficha.exchange("mensaje");
+        String pantalla = ficha.exchange("");
         System.out.println(pantalla);
     }
 }
