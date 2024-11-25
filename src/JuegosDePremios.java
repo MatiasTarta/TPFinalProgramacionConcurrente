@@ -11,7 +11,7 @@ public class JuegosDePremios {
     }
 
     public int jugar() throws InterruptedException {
-        semEntrada.release(); // notifica al empleado para poder recibir una ficha
+        // semEntrada.release(); // notifica al empleado para poder recibir una ficha
         ficha.exchange(Thread.currentThread().getName() + " cambia una ficha");
         int randomSleep = (int) (Math.random() * 10) * 1000;
         Thread.sleep(randomSleep); // simula tiempo de juego
@@ -21,7 +21,7 @@ public class JuegosDePremios {
     public void darFicha() throws InterruptedException {
         // metodo ejecutado por los encargados del area
         semEntrada.acquire();
-        String pantalla = ficha.exchange(null);
+        String pantalla = ficha.exchange("mensaje");
         System.out.println(pantalla);
     }
 }
