@@ -17,7 +17,7 @@ public class ParqueDiversiones {
         restaurant = new Comedor();
         juegos = new JuegosDePremios();
         molinete = new Semaphore(capacidad);
-        locomotor = new Tren(4);
+        locomotor = new Tren(10);
         for (int i = 0; i < encargados.length; i++) {
             encargados[i] = new Encargado(juegos);
             encargados[i].start();
