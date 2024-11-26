@@ -13,12 +13,14 @@ public class Reloj extends Thread {
 
     public void run() {
         while (true) {
-            // Formatea la hora en formato HH:mm
             String horaFormateada = String.format("%02d:%02d", hora, minutos);
             etiquetaHora.setText(horaFormateada);
-
-            // Avanza el tiempo
             minutos += 1;
+            try {
+                Thread.sleep(1500);// los ms son 1 minutos
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
             if (minutos >= 60) {
                 minutos = 0;
                 hora += 1;
@@ -27,11 +29,6 @@ public class Reloj extends Thread {
                 }
             }
 
-            try {
-                Thread.sleep(333); // (20 segundos / 60 minutos) ≈ 333 ms por minuto
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
