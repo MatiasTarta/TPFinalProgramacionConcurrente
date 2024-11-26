@@ -6,6 +6,7 @@ public class Tren {
     private BlockingQueue<String> colaTren;
     private int pasajeros, max, minutos;
     private Semaphore semaforoTren, semaforoBajada;
+    boolean trenListo;
 
     public Tren(int capacidad) {
         colaTren = new ArrayBlockingQueue<>(capacidad);
@@ -14,6 +15,7 @@ public class Tren {
         minutos = 0;
         semaforoTren = new Semaphore(1);
         semaforoBajada = new Semaphore(0);
+        trenListo = false;
     }
 
     public int getMinutos() {
@@ -28,33 +30,27 @@ public class Tren {
         minutos++;
     }
 
-    public int getPasajeros() {
-        return pasajeros;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
     public void esperarTren() throws InterruptedException {
         colaTren.put("Agrega nuevo visitante");
         System.out.println(Thread.currentThread().getName() + " esta esperando el tren");
-
     }
 
-    public void abordar() throws InterruptedException {
+    public boolean abordar() throws InterruptedException {
+        boolean subio = false;
         if (!vacia() && pasajeros <= max) {
             // mientras que haya gente en la cola la sube al tren
             // con esa condicion evito que el hilo Maquinista quede en deadlock
             semaforoTren.acquire();
             colaTren.take();
             pasajeros++;
-            System.out.println("Pasajero subio. pasajeros: " + pasajeros);
+            System.out.println(Thread.currentThread().getName() + " subio al tren.pasajeros: " + pasajeros);
             semaforoTren.release();
+            subio = true;
         }
         if (pasajeros == max) {
-            hacerRecorrido();// si el tren ya esta lleno hace un recorrido
+            hacerRecorrido();
         }
+        return subio;
     }
 
     public void hacerRecorrido() throws InterruptedException {
@@ -65,12 +61,16 @@ public class Tren {
         reiniciarReloj();// reinicia el cronometro de 5 minutos
         System.out.println("Finaliza el recorrido");
         semaforoTren.release();// libera el tren
-        semaforoBajada.release();// libera la pajada para los pasajeros
+        semaforoBajada.release();
+        notify();
     }
 
-    public void bajarTren() throws InterruptedException {
+    public synchronized void bajarTren(boolean bandera) throws InterruptedException {
+        while (bandera == false) {
+            this.wait();// monitor hecho para controlar que el pasajero no se vaya antes de irse
+        }
         semaforoBajada.acquire();
-        System.out.println(Thread.currentThread().getName() + " bajo del tren");
+        // System.out.println(Thread.currentThread().getName() + " bajo del tren");
         pasajeros--;
         semaforoBajada.release();
     }

@@ -11,8 +11,8 @@ public class Maquinista extends Thread {
     public void run() {
         while (true) {
             try {
-                tren.abordar();
-                if (tren.getMinutos() == 5) {
+                // tren.abordar();
+                if (tren.getMinutos() == 5 && tren.vacia()) {
                     // si pasan los minutos parto el tren, cuando el tren se llena, la partida se
                     // hace desde la clase Tren
                     tren.hacerRecorrido();

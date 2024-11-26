@@ -17,7 +17,7 @@ public class ParqueDiversiones {
         restaurant = new Comedor();
         juegos = new JuegosDePremios();
         molinete = new Semaphore(capacidad);
-        locomotor = new Tren(10);
+        locomotor = new Tren(3);
         for (int i = 0; i < encargados.length; i++) {
             encargados[i] = new Encargado(juegos);
             encargados[i].start();
@@ -37,8 +37,10 @@ public class ParqueDiversiones {
     }
 
     public void subirAlTren() throws InterruptedException {
+        boolean bandera = false;
         locomotor.esperarTren();
-        locomotor.bajarTren();
+        bandera = locomotor.abordar();
+        locomotor.bajarTren(bandera);
     }
 
     public void usarComedor() throws InterruptedException {
