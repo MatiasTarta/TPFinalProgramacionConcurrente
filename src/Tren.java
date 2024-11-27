@@ -35,22 +35,19 @@ public class Tren {
         System.out.println(Thread.currentThread().getName() + " esta esperando el tren");
     }
 
-    public boolean abordar() throws InterruptedException {
-        boolean subio = false;
+    public void abordar() throws InterruptedException {
         if (!vacia() && pasajeros <= max) {
             // mientras que haya gente en la cola la sube al tren
             // con esa condicion evito que el hilo Maquinista quede en deadlock
             semaforoTren.acquire();
             colaTren.take();
             pasajeros++;
-            System.out.println(Thread.currentThread().getName() + " subio al tren.pasajeros: " + pasajeros);
+            System.out.println("Pasajero subio al tren.pasajeros: " + pasajeros);
             semaforoTren.release();
-            subio = true;
         }
         if (pasajeros == max) {
             hacerRecorrido();
         }
-        return subio;
     }
 
     public void hacerRecorrido() throws InterruptedException {
@@ -62,13 +59,9 @@ public class Tren {
         System.out.println("Finaliza el recorrido");
         semaforoTren.release();// libera el tren
         semaforoBajada.release();
-        notify();
     }
 
-    public synchronized void bajarTren(boolean bandera) throws InterruptedException {
-        while (bandera == false) {
-            this.wait();// monitor hecho para controlar que el pasajero no se vaya antes de irse
-        }
+    public void bajarTren() throws InterruptedException {
         semaforoBajada.acquire();
         // System.out.println(Thread.currentThread().getName() + " bajo del tren");
         pasajeros--;

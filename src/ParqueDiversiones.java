@@ -39,8 +39,7 @@ public class ParqueDiversiones {
     public void subirAlTren() throws InterruptedException {
         boolean bandera = false;
         locomotor.esperarTren();
-        bandera = locomotor.abordar();
-        locomotor.bajarTren(bandera);
+        locomotor.bajarTren();
     }
 
     public void usarComedor() throws InterruptedException {
