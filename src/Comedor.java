@@ -1,6 +1,7 @@
 
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 public class Comedor {
     int totalMesas;
@@ -28,7 +29,10 @@ public class Comedor {
     public void sentarse() throws InterruptedException {
         try {
             System.out.println(Thread.currentThread().getName() + " se sentó en la mesa.");
-            barreraMesa.await(); // Esperar a que la mesa esté llena
+            barreraMesa.await(5, TimeUnit.SECONDS); // Esperar a que la mesa esté llena o que se agote el tiempo
+            System.out.println("La mesa se ha llenado, todos empiezan a comer.");
+        } catch (java.util.concurrent.TimeoutException e) {
+            System.out.println("Los visitantes se cansaron de esperar y se fueron");
         } catch (Exception e) {
             System.out.println("Error en la sincronización de la mesa: " + e.getMessage());
         }

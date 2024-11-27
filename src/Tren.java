@@ -63,7 +63,7 @@ public class Tren {
 
     public void bajarTren() throws InterruptedException {
         semaforoBajada.acquire();
-        // System.out.println(Thread.currentThread().getName() + " bajo del tren");
+        System.out.println(Thread.currentThread().getName() + " bajo del tren");
         pasajeros--;
         if (pasajeros > 0) {
             semaforoBajada.release();// aseguro que el ultimo pasajero no deje 1 permiso liberado de mas
