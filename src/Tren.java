@@ -65,7 +65,9 @@ public class Tren {
         semaforoBajada.acquire();
         // System.out.println(Thread.currentThread().getName() + " bajo del tren");
         pasajeros--;
-        semaforoBajada.release();
+        if (pasajeros > 0) {
+            semaforoBajada.release();// aseguro que el ultimo pasajero no deje 1 permiso liberado de mas
+        }
     }
 
     public boolean trenLleno() {
