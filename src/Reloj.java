@@ -31,4 +31,8 @@ public class Reloj extends Thread {
 
         }
     }
+
+    public int getHora() {
+        return this.hora;
+    }
 }

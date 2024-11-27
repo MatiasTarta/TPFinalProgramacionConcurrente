@@ -30,7 +30,6 @@ public class Comedor {
         try {
             System.out.println(Thread.currentThread().getName() + " se sentó en la mesa.");
             barreraMesa.await(5, TimeUnit.SECONDS); // Esperar a que la mesa esté llena o que se agote el tiempo
-            System.out.println("La mesa se ha llenado, todos empiezan a comer.");
         } catch (java.util.concurrent.TimeoutException e) {
             System.out.println("Los visitantes se cansaron de esperar y se fueron");
         } catch (Exception e) {

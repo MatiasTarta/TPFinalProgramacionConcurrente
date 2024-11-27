@@ -12,12 +12,13 @@ public class ParqueDiversiones {
     Semaphore molinete;
     Maquinista maquina;
     Tren locomotor;
+    Reloj relojControl;
 
     public ParqueDiversiones(int capacidad) {
         restaurant = new Comedor();
         juegos = new JuegosDePremios();
         molinete = new Semaphore(capacidad);
-        locomotor = new Tren(3);
+        locomotor = new Tren(10);
         for (int i = 0; i < encargados.length; i++) {
             encargados[i] = new Encargado(juegos);
             encargados[i].start();
@@ -27,8 +28,11 @@ public class ParqueDiversiones {
     }
 
     public void entrar() throws InterruptedException {
-        molinete.acquire();
-        System.out.println(Thread.currentThread().getName() + " Entro al parque de atracciones");
+        if (relojControl.getHora() <= 9) {
+            System.out.println(Thread.currentThread().getName() + " entro al parque");
+        } else {
+            System.out.println("El parque ya cerro vuelva mañana");
+        }
     }
 
     public void salir() {
@@ -37,31 +41,41 @@ public class ParqueDiversiones {
     }
 
     public void subirAlTren() throws InterruptedException {
-        boolean bandera = false;
-        locomotor.esperarTren();
-        locomotor.bajarTren();
+        if (relojControl.getHora() <= 19) {
+            locomotor.esperarTren();
+            locomotor.bajarTren();
+        } else {
+            System.out.println("El tren ya cerró por hoy. Vuelva mañana.");
+        }
     }
 
     public void usarComedor() throws InterruptedException {
-        boolean exito;
-        exito = restaurant.entrarComedor();
-        if (exito) {
-            restaurant.sentarse();
-            // comen
-            restaurant.salir();
+        if (relojControl.getHora() <= 19) {
+            boolean exito = restaurant.entrarComedor();
+            if (exito) {
+                restaurant.sentarse();
+                // comen
+                restaurant.salir();
+            } else {
+                System.out.println("El comedor está lleno. Intente más tarde.");
+            }
         } else {
-            // comedor lleno, intenta otra cosa
+            System.out.println("El comedor ya cerró por hoy. Vuelva mañana.");
         }
     }
 
     public int jugarPorPremios() {
         int puntos = 0;
-        try {
-            puntos = juegos.jugar();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (relojControl.getHora() <= 19) {
+            try {
+                puntos = juegos.jugar();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + " obtuvo: " + puntos + " puntos.");
+        } else {
+            System.out.println("Los juegos ya cerraron por hoy. Vuelva mañana.");
         }
-        System.out.println(Thread.currentThread().getName() + " obtuvo: " + puntos + " puntos.");
         return puntos;
     }
 
@@ -77,6 +91,7 @@ public class ParqueDiversiones {
         ventana.setVisible(true);
 
         Reloj reloj = new Reloj(etiquetaHora);
+        relojControl = reloj;
         reloj.start();
     }
 }
