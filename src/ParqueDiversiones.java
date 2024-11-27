@@ -13,12 +13,15 @@ public class ParqueDiversiones {
     Maquinista maquina;
     Tren locomotor;
     Reloj relojControl;
+    int capacidad, visitantes;
 
     public ParqueDiversiones(int capacidad) {
         restaurant = new Comedor();
         juegos = new JuegosDePremios();
         molinete = new Semaphore(capacidad);
         locomotor = new Tren(10);
+        this.capacidad = capacidad;
+        visitantes = 0;
         for (int i = 0; i < encargados.length; i++) {
             encargados[i] = new Encargado(juegos);
             encargados[i].start();
@@ -27,17 +30,22 @@ public class ParqueDiversiones {
         maquina.start();
     }
 
-    public void entrar() throws InterruptedException {
+    public synchronized void entrar() throws InterruptedException {
         if (relojControl.getHora() <= 9) {
+            while ((capacidad == visitantes)) {
+                this.wait();
+            }
+            visitantes++;
             System.out.println(Thread.currentThread().getName() + " entro al parque");
         } else {
             System.out.println("El parque ya cerro vuelva mañana");
         }
     }
 
-    public void salir() {
+    public synchronized void salir() {
         System.out.println(Thread.currentThread().getName() + " se fue del parque");
-        molinete.release();
+        visitantes--;
+        notify();
     }
 
     public void subirAlTren() throws InterruptedException {
