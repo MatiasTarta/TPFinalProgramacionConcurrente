@@ -14,6 +14,7 @@ public class ParqueDiversiones {
     Tren locomotor;
     Reloj relojControl;
     int capacidad, visitantes;
+    SalaRealidadVirtual mundoRV;
 
     public ParqueDiversiones(int capacidad) {
         restaurant = new Comedor();
@@ -28,6 +29,7 @@ public class ParqueDiversiones {
         }
         maquina = new Maquinista(locomotor);
         maquina.start();
+        mundoRV = new SalaRealidadVirtual(10);
     }
 
     public synchronized void entrar() throws InterruptedException {
@@ -85,6 +87,16 @@ public class ParqueDiversiones {
             System.out.println("Los juegos ya cerraron por hoy. Vuelva mañana.");
         }
         return puntos;
+    }
+
+    public void usarSalaRV() {
+        try {
+            mundoRV.entrarASalaRV();
+            Thread.sleep(5500);
+            mundoRV.salirSalaRV();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     public void reloj() {

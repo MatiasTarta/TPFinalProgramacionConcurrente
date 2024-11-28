@@ -9,6 +9,7 @@ public class App {
         System.out.println("2: Uso del comedor");
         System.out.println("3: Jugar por premios");
         System.out.println("4: Hacer todas las actividades");
+        System.out.println("5: Uso de la sala de realidad virtual");
 
         int tipoVisitante = scanner.nextInt();
 
@@ -22,26 +23,12 @@ public class App {
 
         switch (tipoVisitante) {
             case 1:
-                for (int i = 0; i < visitantes.length; i++) {
-                    visitantes[i] = new Visitante("Visitante-" + (i + 1), parqueDeLaCosta, 1);
-                    visitantes[i].start();
-                }
-                break;
             case 2:
-                for (int i = 0; i < visitantes.length; i++) {
-                    visitantes[i] = new Visitante("Visitante-" + (i + 1), parqueDeLaCosta, 2);
-                    visitantes[i].start();
-                }
-                break;
             case 3:
-                for (int i = 0; i < visitantes.length; i++) {
-                    visitantes[i] = new Visitante("Visitante-" + (i + 1), parqueDeLaCosta, 3);
-                    visitantes[i].start();
-                }
-                break;
             case 4:
+            case 5:
                 for (int i = 0; i < visitantes.length; i++) {
-                    visitantes[i] = new Visitante("Visitante-" + (i + 1), parqueDeLaCosta, 4);
+                    visitantes[i] = new Visitante("Visitante-" + (i + 1), parqueDeLaCosta, tipoVisitante);
                     visitantes[i].start();
                 }
                 break;
@@ -49,7 +36,6 @@ public class App {
                 System.out.println("Opción no válida");
         }
 
-        // Cerrar el scanner
         scanner.close();
     }
 }

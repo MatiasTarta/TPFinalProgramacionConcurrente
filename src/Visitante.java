@@ -27,10 +27,12 @@ public class Visitante extends Thread {
                     break;
                 case 4:
                     parqueDeLaCosta.subirAlTren();
-                    Thread.sleep(4100);
                     parqueDeLaCosta.usarComedor();
-                    Thread.sleep(3000);
                     puntos += parqueDeLaCosta.jugarPorPremios();
+                    parqueDeLaCosta.usarSalaRV();
+                    break;
+                case 5:
+                    parqueDeLaCosta.usarSalaRV();
                     break;
                 default:
                     System.out.println(getName() + " no realizó ninguna actividad.");
