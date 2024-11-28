@@ -53,7 +53,7 @@ public class Tren {
     public void hacerRecorrido() throws InterruptedException {
         semaforoTren.acquire();
         System.out.println("El tren parte de la estacion");
-        Thread.sleep(5000);
+        Thread.sleep(4500);
         // termina el recorrido.
         reiniciarReloj();// reinicia el cronometro de 5 minutos
         System.out.println("Finaliza el recorrido");
