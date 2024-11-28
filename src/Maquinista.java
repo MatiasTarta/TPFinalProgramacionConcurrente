@@ -1,5 +1,5 @@
 public class Maquinista extends Thread {
-    private Tren tren; // Instancia del Tren
+    private Tren tren;
     private int minutosPasados; // Contador interno de minutos
 
     public Maquinista(Tren tren) {
@@ -23,7 +23,7 @@ public class Maquinista extends Thread {
                 tren.incrementar();
             } catch (InterruptedException e) {
                 System.out.println("El maquinista fue interrumpido: " + e.getMessage());
-                break; // Salir del bucle si el hilo es interrumpido
+                break;
             }
         }
     }

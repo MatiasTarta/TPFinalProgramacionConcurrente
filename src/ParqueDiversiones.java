@@ -95,7 +95,7 @@ public class ParqueDiversiones {
             Thread.sleep(5500);
             mundoRV.salirSalaRV();
         } catch (Exception e) {
-            // TODO: handle exception
+
         }
     }
 

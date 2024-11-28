@@ -18,7 +18,7 @@ public class Comedor {
     public boolean entrarComedor() {
         boolean resultado = semaforoMesas.tryAcquire();
         if (resultado) {
-            // System.out.println(Thread.currentThread().getName() + " entró al comedor");
+            System.out.println(Thread.currentThread().getName() + " entró al comedor");
         } else {
             System.out.println(Thread.currentThread().getName() + " no pudo entrar al comedor porque estaba lleno");
         }

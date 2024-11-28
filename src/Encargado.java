@@ -11,7 +11,7 @@ public class Encargado extends Thread {
             try {
                 juegos.darFicha();
             } catch (Exception e) {
-                // TODO: handle exception
+
             }
         }
     }

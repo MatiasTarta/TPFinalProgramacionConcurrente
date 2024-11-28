@@ -1,7 +1,7 @@
 public class Visitante extends Thread {
     private ParqueDiversiones parqueDeLaCosta;
     private int puntos;
-    private int tipo; // Define qué actividad realizará el visitante
+    private int tipo;
 
     public Visitante(String nombre, ParqueDiversiones parque, int tipo) {
         super(nombre);
@@ -40,7 +40,7 @@ public class Visitante extends Thread {
 
             parqueDeLaCosta.salir();
         } catch (Exception e) {
-            e.printStackTrace(); // Manejo básico de excepciones
+            e.printStackTrace();
         }
     }
 }
