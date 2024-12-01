@@ -53,7 +53,11 @@ public class ParqueDiversiones {
     public void subirAlTren() throws InterruptedException {
         if (relojControl.getHora() <= 19) {
             locomotor.esperarTren();
-            locomotor.bajarTren();
+            if (relojControl.getHora() <= 19) {
+                locomotor.bajarTren();
+            } else {
+                System.out.println("El tren ya cerró por hoy. Vuelva mañana.");
+            }
         } else {
             System.out.println("El tren ya cerró por hoy. Vuelva mañana.");
         }
